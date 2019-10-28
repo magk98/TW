@@ -1,15 +1,26 @@
 package drukarka;
 
+import java.util.LinkedList;
+
 public class Main {
 
     public static void main(String[] args){
-        MonitorDrukarek monitorDrukarek = new MonitorDrukarek();
-        Thread threads[] = new Thread[10];
-        for (int i = 0; i < 10; i++){
-            threads[i] = new Thread(new Drukarka(monitorDrukarek));
-        }
-        for (int i = 0; i < 10; i++){
-            threads[i].start();
+        int liczbaDrukarek = 2;
+        int liczbaKlientow = 10;
+        MonitorDrukarek monitorDrukarek = new MonitorDrukarek(liczbaDrukarek);
+        LinkedList<Thread> threads = new LinkedList<>();
+
+        for(int i = 0; i< liczbaKlientow; i++)
+            threads.add(new Klient(monitorDrukarek, i));
+        for (Thread thread : threads)
+            thread.start();
+
+        for (Thread thread : threads){
+            try{
+                thread.join();
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

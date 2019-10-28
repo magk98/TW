@@ -1,13 +1,13 @@
 package drukarka;
 
-public class Drukarka implements Runnable{
-    private MonitorDrukarek monitorDrukarek;
+public class Drukarka{
+    public int numer;
 
-    public Drukarka(MonitorDrukarek monitorDrukarek){
-        this.monitorDrukarek = monitorDrukarek;
+    public Drukarka(int numer){
+        this.numer = numer;
     }
-
-    public void run(){
-        this.monitorDrukarek.drukuj();
+    public void print(String tekst) throws InterruptedException {
+        Thread.sleep((long) (Math.random() * 1000));
+        System.out.println(tekst);
     }
 }
